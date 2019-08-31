@@ -44,8 +44,7 @@ def getSalatTime(prayer, ISOdatetime, coords, timezone, method='MWL', asr='Stand
     lat = coords[0]
     lng = coords[1]
     elv = coords[2] if len(coords) > 2 else 0
-    curr_dt=datetime.date.today()
-    #curr_dt = datetime.datetime.fromisoformat(ISOdatetime)
+    curr_dt = tw_ISO8601_to_dateTime(ISOdatetime)
     date = (curr_dt.year, curr_dt.month, curr_dt.day)
     timeZone = timezone + (1.0 if dst else 0.0)
     jDate = julian(date[0], date[1], date[2]) - lng / (15 * 24.0)
@@ -60,8 +59,7 @@ def getSawmTime(ISOdatetime, coords, timezone, method='MWL', dst=0, waitpad=10.0
     lat = coords[0]
     lng = coords[1]
     elv = coords[2] if len(coords) > 2 else 0
-    curr_dt=datetime.date.today()
-    #curr_dt = datetime.datetime.fromisoformat(ISOdatetime)
+    curr_dt = tw_ISO8601_to_dateTime(ISOdatetime)
     date = (curr_dt.year, curr_dt.month, curr_dt.day)
     timeZone = timezone + (1.0 if dst else 0.0)
     jDate = julian(date[0], date[1], date[2]) - lng / (15 * 24.0)
@@ -70,11 +68,21 @@ def getSawmTime(ISOdatetime, coords, timezone, method='MWL', dst=0, waitpad=10.0
     w, s, due, until = computeTime('Asr', params, jDate, lat, lng, elv, timeZone, waitpad, untilpad)
     return dateTimeFormat(date, [wait, scheduled, due, until])
 
+# FORMATTING FUNCTIONS
+
+from datetime import datetime, timedelta
+
+def tw_ISO8601_to_dateTime(dt):  #TW formatted JSON ISO 8601 datetime string to datetime object
+    yr = int(dt[0:4])
+    mo = int(dt[4:6].lstrip('0'))
+    day = int(dt[6:8].lstrip('0'))
+    return datetime(yr,mo,day)
+
 def dateTimeFormat(date, times):
-    day_start = datetime.datetime(date[0],date[1],date[2])
+    day_start = datetime(date[0],date[1],date[2])
     dts = []
     for time in times:
-        delta = datetime.timedelta(hours=time)
+        delta = timedelta(hours=time)
         dt = day_start + delta
         dts.append(dt.isoformat())
     return dts
