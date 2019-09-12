@@ -23,7 +23,7 @@ if new_task['description'] in init_missed_json.keys() and new_task['status'] == 
         missed_json[missed_prayer] += 1
         file = open(missed_path, 'w')
         json.dump(missed_json, file)
-
-
-print(json.dumps(new_task))
+else:
+    print(json.dumps(new_task))
+    
 sys.exit(0)

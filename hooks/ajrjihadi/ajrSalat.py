@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import datetime
 import math
 import re
@@ -44,7 +42,7 @@ def getSalatTime(prayer, ISOdatetime, coords, timezone, method='MWL', asr='Stand
     lat = coords[0]
     lng = coords[1]
     elv = coords[2] if len(coords) > 2 else 0
-    curr_dt = tw_ISO8601_to_dateTime(ISOdatetime)
+    curr_dt = tw_ISO8601_to_local_dt(ISOdatetime,timezone)
     date = (curr_dt.year, curr_dt.month, curr_dt.day)
     timeZone = timezone + (1.0 if dst else 0.0)
     jDate = julian(date[0], date[1], date[2]) - lng / (15 * 24.0)
@@ -72,10 +70,13 @@ def getSawmTime(ISOdatetime, coords, timezone, method='MWL', dst=0, waitpad=10.0
 
 from datetime import datetime, timedelta
 
-def tw_ISO8601_to_dateTime(dt):  #TW formatted JSON ISO 8601 datetime string to datetime object
+def tw_ISO8601_to_local_dt(dt):  #TW formatted JSON ISO 8601 datetime string to datetime object
     yr = int(dt[0:4])
     mo = int(dt[4:6].lstrip('0'))
     day = int(dt[6:8].lstrip('0'))
+    hr = int(dt[9:11].lstrip('0'))
+    min = int(dt[11:13].lstrip('0'))
+    sec = int
     return datetime(yr,mo,day)
 
 def dateTimeFormat(date, times):
