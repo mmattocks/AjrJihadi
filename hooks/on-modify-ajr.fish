@@ -6,8 +6,6 @@ if test -n $parent
     task sync
 else
     echo $json2
-else
-    python3 ~/.task/hooks/ajrjihadi/modify-ajr.py "$json1" "$json2"
 end
 
 exit 0

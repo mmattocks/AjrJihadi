@@ -70,13 +70,8 @@ def getSawmTime(ISOdatetime, coords, timezone, method='MWL', dst=0, waitpad=10.0
 
 from datetime import datetime, timedelta
 
-def tw_ISO8601_to_local_dt(dt):  #TW formatted JSON ISO 8601 datetime string to datetime object
-    yr = int(dt[0:4])
-    mo = int(dt[4:6].lstrip('0'))
-    day = int(dt[6:8].lstrip('0'))
-    hr = int(dt[9:11].lstrip('0'))
-    min = int(dt[11:13].lstrip('0'))
-    sec = int
+def tw_ISO8601_to_local_dt(dt,tz):  #TW formatted JSON ISO 8601 zulu datetime string to local datetime object
+    return datetime.strptime(dt,"%Y%m%dT%H%M%S%z") + timedelta(hours=tz)
     return datetime(yr,mo,day)
 
 def dateTimeFormat(date, times):

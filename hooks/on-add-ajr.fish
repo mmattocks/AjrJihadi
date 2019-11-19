@@ -6,8 +6,6 @@ if test -n $parent
     task sync
 else
     echo $json
-else
-    python3 ~/.task/hooks/ajrjihadi/add-ajr.py "$json"
 end
 
 exit 0
