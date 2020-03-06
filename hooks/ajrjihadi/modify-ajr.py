@@ -21,6 +21,7 @@ if usrconfig.track_missed and new_task['status'] == 'deleted' and new_task['desc
     if not found_missed:
         p_task.add_annotation('MISSED:'+str(usrconfig.missed_start+1))
     p_task.save()
+    print(json.dumps(new_task))
 else:
     print(json.dumps(new_task))
     
