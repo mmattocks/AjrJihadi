@@ -1,39 +1,11 @@
 import datetime
 import math
 import re
+import usrconfig
 
-#------------------------ Constants --------------------------
-#Handled prayer strings
-prayer_list=['Maghrib', 'Isha', 'Fajr', 'Dhuhr', 'Asr']
-
-# Calculation Methods
-methods = {
-    'MWL': {
-        'name': 'Muslim World League',
-        'params': {'fajr': 18, 'isha': 17, 'maghrib': 0.0, 'midnight': 'Standard'}},
-    'ISNA': {
-        'name': 'Islamic Society of North America (ISNA)',
-        'params': {'fajr': 15, 'isha': 15, 'maghrib': 0.0, 'midnight': 'Standard'}},
-    'Egypt': {
-        'name': 'Egyptian General Authority of Survey',
-        'params': {'fajr': 19.5, 'isha': 17.5, 'maghrib': 0.0, 'midnight': 'Standard'}},
-    'Makkah': {
-        'name': 'Umm Al-Qura University, Makkah',
-        'params': {'fajr': 18.5, 'isha': '90 min', 'maghrib': 0.0, 'midnight': 'Standard'}}, # fajr was 19 degrees before 1430 hijri
-    'Karachi': {
-        'name': 'University of Islamic Sciences, Karachi',
-        'params': {'fajr': 18, 'isha': 18, 'maghrib': 0.0, 'midnight': 'Standard'}},
-    'Tehran': {
-        'name': 'Institute of Geophysics, University of Tehran',
-        'params': {'fajr': 17.7, 'isha': 14, 'maghrib': 4.5, 'midnight': 'Jafari'}},
-    # isha is not explicitly specified in this method
-    'Jafari': {
-        'name': 'Shia Ithna-Ashari, Leva Institute, Qum',
-        'params': {'fajr': 16, 'isha': 14, 'maghrib': 4, 'midnight': 'Jafari'}}
-}
-
+#------------------------ Constant handling --------------------------
 def assembleParams(method, asrMethod):
-    m_params = methods[method]['params']
+    m_params = usrconfig.methods[method]['params']
     params = [10.0, m_params['fajr'], 0.0, 0.0, asrMethod, m_params['maghrib'], m_params['isha'], 0.0, m_params['midnight']]
     return params
 
@@ -57,7 +29,7 @@ def getSawmTime(ISOdatetime, coords, timezone, method='MWL', dst=0, waitpad=10.0
     lat = coords[0]
     lng = coords[1]
     elv = coords[2] if len(coords) > 2 else 0
-    curr_dt = tw_ISO8601_to_dateTime(ISOdatetime)
+    curr_dt = tw_ISO8601_to_local_dt(ISOdatetime,timezone)
     date = (curr_dt.year, curr_dt.month, curr_dt.day)
     timeZone = timezone + (1.0 if dst else 0.0)
     jDate = julian(date[0], date[1], date[2]) - lng / (15 * 24.0)
@@ -72,7 +44,6 @@ from datetime import datetime, timedelta
 
 def tw_ISO8601_to_local_dt(dt,tz):  #TW formatted JSON ISO 8601 zulu datetime string to local datetime object
     return datetime.strptime(dt,"%Y%m%dT%H%M%S%z") + timedelta(hours=tz)
-    return datetime(yr,mo,day)
 
 def dateTimeFormat(date, times):
     day_start = datetime(date[0],date[1],date[2])

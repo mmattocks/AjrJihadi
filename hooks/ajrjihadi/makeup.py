@@ -20,7 +20,11 @@ if prayer not in prayer_list:
     sys.exit(str(prayer) + ' not in prayer list: ' + pstring)
     
 db=TaskWarrior()
-p_task=db.tasks.get(description=prayer, project='Din.Salat', status='Recurring')
+try:
+    p_task=db.tasks.get(description=prayer, project='Din.Salat', status='Recurring')
+except:
+    sys.exit("No task for this prayer, make one first.")
+
 found_missed=False
 for p_ann in p_task['annotations']:
     ann_split = p_ann.split(":")

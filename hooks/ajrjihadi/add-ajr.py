@@ -2,29 +2,19 @@ import time
 import sys
 import json
 import ajrSalat
-
-#User ajrSalat params
-salatWaitpad = 1.0 #waitpad hr before time is scheduled/calculated to begin/enter, begin displaying prayer task (TW wait:)
-salatUntilpad = 24.0 #until pad hr after time is scheduled/calculated to end/exit, remove prayer task (TW until:)
-coords = (43.6532,-79.3832,75.0) #lat/long/elev in m tuple
-methodName = 'ISNA' #check ajrSalat.py for available calculation methods
-asrMethodName = 'Hanafi' #'Standard' or 'Hanafi'
-
-#User ajrSalat sawm/fast params
-sawmWaitpad = 10.0 #display fasting tasks this many hours before sunrise
-sawmUntilpad = 2.0 #delete fasting tasks this many hours after sunset
+import usrconfig
 
 task = json.loads(sys.argv[1])
-if task['description'] in ajrSalat.prayer_list:
+if task['description'] in usrconfig.prayer_list:
     [wait, scheduled, due, until], descmod = ajrSalat.getSalatTime(task['description'],
                                                     task['due'],
-                                                    coords,
+                                                    usrconfig.coords,
                                                     ((time.mktime(time.localtime()) - time.mktime(time.gmtime())) / 60 / 60),
-                                                    asr=asrMethodName,
-                                                    method=methodName,
+                                                    asr=usrconfig.asrMethodName,
+                                                    method=usrconfig.methodName,
                                                     dst=time.localtime().tm_isdst,
-                                                    waitpad=salatWaitpad,
-                                                    untilpad=salatUntilpad)
+                                                    waitpad=usrconfig.salatWaitpad,
+                                                    untilpad=usrconfig.salatUntilpad)
 
     task['wait'], task['scheduled'], task['due'], task['until'] = wait, scheduled, due, until
 
@@ -32,12 +22,12 @@ if task['description'] in ajrSalat.prayer_list:
         task['description'] = descmod
 elif task['description'] in ['Sawm','Fast']:
     [wait, scheduled, due, until] = ajrSalat.getSawmTime(task['due'],
-                                                    coords,
+                                                    usrconfig.coords,
                                                     ((time.mktime(time.localtime()) - time.mktime(time.gmtime())) / 60 / 60),
-                                                    method=methodName,
+                                                    method=usrconfig.methodName,
                                                     dst=time.localtime().tm_isdst,
-                                                    waitpad=sawmWaitpad,
-                                                    untilpad=sawmUntilpad)  
+                                                    waitpad=usrconfig.sawmWaitpad,
+                                                    untilpad=usrconfig.sawmUntilpad)  
     task['wait'], task['scheduled'], task['due'], task['until'] = wait, scheduled, due, until
 
 print(json.dumps(task))
