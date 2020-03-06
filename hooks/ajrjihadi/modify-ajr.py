@@ -4,13 +4,11 @@ import os.path
 
 #User missed prayer params
 track_missed=True
-prayer_list=['Maghrib', 'Isha', 'Fajr', 'Dhuhr', 'Asr']
 missed_start=1460
 
-old_task = json.loads(sys.argv[1])
-new_task = json.loads(sys.argv[2])
+new_task = json.loads(sys.argv[1])
 
-if track_missed and new_task['status'] == 'DELETED' and new_task['description'] in prayer_list:
+if track_missed and new_task['status'] == 'deleted' and new_task['description'] in prayer_list:
     from tasklib import TaskWarrior
 
     db=TaskWarrior()
@@ -22,9 +20,9 @@ if track_missed and new_task['status'] == 'DELETED' and new_task['description'] 
             found_missed = True
             ann_split[1] += 1
             p_task.remove_annotation(p_ann)
-            p_task.add_annotation(ann_split[1]+':'+ann_split[2])
+            p_task.add_annotation(ann_split[0]+':'+ann_split[1])
     if not found_missed:
-        p_task.add_annotation('MISSED:'+(missed_start+1))
+        p_task.add_annotation('MISSED:'+str(missed_start+1))
     p_task.save()
 else:
     print(json.dumps(new_task))
