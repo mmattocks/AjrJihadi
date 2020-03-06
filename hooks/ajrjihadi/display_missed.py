@@ -3,7 +3,7 @@ import usrconfig
 
 db=TaskWarrior()
 
-for prayer in prayer_list:
+for prayer in usrconfig.prayer_list:
     try:
         p_task=db.tasks.get(description=prayer, project='Din.Salat', status='Recurring')
         found_missed = False
