@@ -33,6 +33,7 @@ for p_ann in p_task['annotations']:
         new_missed = int(ann_split[1]) - num_madeup
         p_task.remove_annotation(p_ann)
         p_task.add_annotation(ann_split[0]+':'+str(new_missed))
+        print("Alhamdulilah, made up " + str(new_missed) + " " + prayer + " prayers.")
         print
 if not found_missed:
     print("No missed prayers recorded for " + prayer)
