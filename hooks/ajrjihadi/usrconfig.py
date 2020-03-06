@@ -15,7 +15,7 @@ sawmUntilpad = 2.0 #delete fasting tasks this many hours after sunset
 
 #Missed prayer setup
 track_missed=True
-missed_start=0 #the number of missed prayers to begin with
+missed_start=1500 #the number of missed prayers to begin with
 
 # Calculation Methods
 methods = {
