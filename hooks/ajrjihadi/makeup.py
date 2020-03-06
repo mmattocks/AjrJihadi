@@ -30,7 +30,7 @@ for p_ann in p_task['annotations']:
     ann_split = p_ann['description'].split(":")
     if len(ann_split) == 2 and ann_split[0] == 'MISSED' and ann_split[1].isnumeric() and int(ann_split[1]) > 0:
         found_missed = True
-        new_missed = int(ann_split[1]) - num_madeup
+        new_missed = int(ann_split[1]) - int(num_madeup)
         p_task.remove_annotation(p_ann)
         p_task.add_annotation(ann_split[0]+':'+str(new_missed))
         print("Alhamdulilah, made up " + str(num_madeup) + " " + prayer + " prayers.")
