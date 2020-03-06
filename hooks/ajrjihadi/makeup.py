@@ -27,7 +27,7 @@ except:
 
 found_missed=False
 for p_ann in p_task['annotations']:
-    ann_split = p_ann.split(":")
+    ann_split = p_ann['description'].split(":")
     if len(ann_split) == 2 and ann_split[0] == 'MISSED' and ann_split[1].isnumeric() and ann_split[1] > 0:
         found_missed = True
         ann_split[1] -= num_madeup
