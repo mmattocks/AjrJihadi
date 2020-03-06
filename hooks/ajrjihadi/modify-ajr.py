@@ -12,12 +12,12 @@ if usrconfig.track_missed and new_task['status'] == 'deleted' and new_task['desc
     p_task=db.tasks.get(uuid=new_task['parent'])
     found_missed = False
     for p_ann in p_task['annotations']:
-        ann_split = p_ann.split(":")
+        ann_split = p_ann['description'].split(":")
         if len(ann_split) == 2 and ann_split[0] == 'MISSED' and ann_split[1].isnumeric():
             found_missed = True
-            ann_split[1] += 1
+            new_missed = int(ann_split[1]) + 1
             p_task.remove_annotation(p_ann)
-            p_task.add_annotation(ann_split[0]+':'+ann_split[1])
+            p_task.add_annotation(ann_split[0]+':'+str(new_missed))
     if not found_missed:
         p_task.add_annotation('MISSED:'+str(usrconfig.missed_start+1))
     p_task.save()
