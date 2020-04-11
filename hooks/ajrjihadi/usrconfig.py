@@ -10,8 +10,9 @@ asrMethodName = 'Hanafi' #'Standard' or 'Hanafi'
 salatWaitpad = 1.0 #waitpad hr before time is scheduled/calculated to begin/enter, begin displaying prayer task (TW wait:)
 salatUntilpad = 24.0 #untilpad hr after time is scheduled/calculated to end/exit, remove prayer task (TW until:)
 #User ajrSalat sawm/fast params
+sawmDesc = "Fast"
 sawmWaitpad = 10.0 #display fasting tasks this many hours before sunrise
-sawmUntilpad = 2.0 #delete fasting tasks this many hours after sunset
+sawmUntilpad = 4.0 #delete fasting tasks this many hours after sunset
 
 #Missed prayer setup
 track_missed=True

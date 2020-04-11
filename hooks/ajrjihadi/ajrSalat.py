@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import math
 import re
 import usrconfig
@@ -25,11 +25,11 @@ def getSalatTime(prayer, ISOdatetime, coords, timezone, method='MWL', asr='Stand
     wait, scheduled, due, until = computeTime(prayer, params, jDate, lat, lng, elv, timeZone, waitpad, untilpad)
     return dateTimeFormat(date, [wait, scheduled, due, until]), modified_desc
 
-def getSawmTime(ISOdatetime, coords, timezone, method='MWL', dst=0, waitpad=10.0, untilpad=1.0):
+def getSawmTime(dt, coords, timezone, method='MWL', dst=0, waitpad=10.0, untilpad=1.0):
     lat = coords[0]
     lng = coords[1]
     elv = coords[2] if len(coords) > 2 else 0
-    curr_dt = tw_ISO8601_to_local_dt(ISOdatetime,timezone)
+    curr_dt = dt + timedelta(hours=timezone)
     date = (curr_dt.year, curr_dt.month, curr_dt.day)
     timeZone = timezone + (1.0 if dst else 0.0)
     jDate = julian(date[0], date[1], date[2]) - lng / (15 * 24.0)
@@ -39,8 +39,6 @@ def getSawmTime(ISOdatetime, coords, timezone, method='MWL', dst=0, waitpad=10.0
     return dateTimeFormat(date, [wait, scheduled, due, until])
 
 # FORMATTING FUNCTIONS
-
-from datetime import datetime, timedelta
 
 def tw_ISO8601_to_local_dt(dt,tz):  #TW formatted JSON ISO 8601 zulu datetime string to local datetime object
     return datetime.strptime(dt,"%Y%m%dT%H%M%S%z") + timedelta(hours=tz)
