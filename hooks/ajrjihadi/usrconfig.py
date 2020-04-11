@@ -11,6 +11,8 @@ salatWaitpad = 1.0 #waitpad hr before time is scheduled/calculated to begin/ente
 salatUntilpad = 24.0 #untilpad hr after time is scheduled/calculated to end/exit, remove prayer task (TW until:)
 #User ajrSalat sawm/fast params
 sawmDesc = "Fast"
+sawmProject = "Din.Sawm"
+sawmTags = ["next", "@home", "@out", "@computer"]
 sawmWaitpad = 10.0 #display fasting tasks this many hours before sunrise
 sawmUntilpad = 4.0 #delete fasting tasks this many hours after sunset
 

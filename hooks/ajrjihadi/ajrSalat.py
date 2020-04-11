@@ -29,8 +29,7 @@ def getSawmTime(dt, coords, timezone, method='MWL', dst=0, waitpad=10.0, untilpa
     lat = coords[0]
     lng = coords[1]
     elv = coords[2] if len(coords) > 2 else 0
-    curr_dt = dt + timedelta(hours=timezone)
-    date = (curr_dt.year, curr_dt.month, curr_dt.day)
+    date = (dt.year, dt.month, dt.day)
     timeZone = timezone + (1.0 if dst else 0.0)
     jDate = julian(date[0], date[1], date[2]) - lng / (15 * 24.0)
     params = assembleParams(method, 'Standard')
