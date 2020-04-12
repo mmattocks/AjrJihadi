@@ -45,3 +45,7 @@ methods = {
         'name': 'Shia Ithna-Ashari, Leva Institute, Qum',
         'params': {'fajr': 16, 'isha': 14, 'maghrib': 4, 'midnight': 'Jafari'}}
 }
+
+#"until" timedeltas in days- wait this long after due to cull children of non-salat recurring tasks of the given recur periods, if enabled
+recur_cull = True
+until_tds={'daily':1,'weekly':2,'biweekly':4,'monthly':7,'bimonthly':14,'quarterly':28,'yearly':60}
