@@ -6,13 +6,21 @@ from datetime import datetime, timedelta
 dates=[]
 
 if len(sys.argv) > 3 or len(sys.argv) < 2:
-    sys.exit("Bad arguments. use one (single day) or two (range of dates) date values")
+    sys.exit("Bad arguments. use one (single day), one comma separated list (list of dates), or two (range of dates) date values")
 
 if len(sys.argv) == 2:
-    try:
-        dates.append(datetime.strptime(sys.argv[1], '%Y-%m-%d'))
-    except:
-        sys.exit("Bad date format on date argument, must be YYYY-MM-DD.")
+    argdates=sys.argv[1].split(',')
+    if len(argdates) == 1:
+        try:
+            dates.append(datetime.strptime(sys.argv[1], '%Y-%m-%d'))
+        except:
+            sys.exit("Bad date format on date argument, must be YYYY-MM-DD.")
+    else:
+        for date in argdates:
+            try:
+                dates.append(datetime.strptime(date, '%Y-%m-%d'))
+            except:
+                sys.exit("Bad date format on date argument " + date + ", must be YYYY-MM-DD.")
 else:
     try:
         date1 = datetime.strptime(sys.argv[1], '%Y-%m-%d')
