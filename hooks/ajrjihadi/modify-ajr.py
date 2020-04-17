@@ -1,7 +1,7 @@
 import sys
 import json
 import usrconfig
-from tasklib import TaskWarrior()
+from tasklib import TaskWarrior
 
 old_task = json.loads(sys.argv[1])
 new_task = json.loads(sys.argv[2])
