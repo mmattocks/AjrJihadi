@@ -5,7 +5,7 @@ from tasklib import TaskWarrior
 
 task = json.loads(sys.argv[1])
 
-if task['description'] in usrconfig.prayer_list and task['status']=='deleted':
+if task['description'] in usrconfig.prayer_list:
     db=TaskWarrior()
     p_task=db.tasks.get(uuid=task['parent'])
     found_missed=False
