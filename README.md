@@ -10,10 +10,10 @@ functioning python3 environment
 tasklib
 
 Installation: 
-1. copy or link contents of /hooks to ~/.task/hooks
+1. copy or link contents of /hooks to ~/.task/hooks on the primary machine (if more than one are to be used)
 2. copy or link fast.fish, makeup.fish, missed.fish to ~/.config/fish/functions as desired
-3. configure your prayer time calculation settings and other options in usrconfig.py
-4. if multiple clients are to be used with a taskserver, set recurrence=no in all client .taskrc
+3. configure your prayer time calculation settings and other options in !.task/hooks/ajrjihadi/usrconfig.py
+4. if multiple clients are to be used with a taskserver, set recurrence=no in all client .taskrc to prevent the generation of duplicate tasks
 
 Usage:
 1. create recurring tasks for prayers you wish to track, eg:
