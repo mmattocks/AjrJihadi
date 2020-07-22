@@ -5,7 +5,6 @@ while read json
 		set tstatus (echo $json | jq -r '.status // empty')
 		if test $tstatus = 'deleted'
 			python3 ~/.task/hooks/ajrjihadi/missed-ajr.py $json
-			echo 'Accounting for missed ajr..'
 		end
 	end
 end

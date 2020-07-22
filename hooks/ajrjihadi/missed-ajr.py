@@ -6,6 +6,7 @@ from tasklib import TaskWarrior
 task = json.loads(sys.argv[1])
 
 if task['description'] in usrconfig.prayer_list or task['description'] == 'Jumuah':
+    print("Accounting for missed ajr...")
     db=TaskWarrior()
     p_task=db.tasks.get(uuid=task['parent'])
     found_missed=False
