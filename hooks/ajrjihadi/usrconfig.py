@@ -48,4 +48,4 @@ methods = {
 
 #"until" timedeltas in days- wait this long after due to cull children of non-salat recurring tasks of the given recur periods, if enabled
 recur_cull = True
-until_tds={'daily':1,'weekly':2,'biweekly':4,'monthly':7,'bimonthly':14,'quarterly':28,'yearly':60}
+until_tds={'daily':1,'weekly':2,'biweekly':4,'monthly':7,'bimonthly':14,'quarterly':28,'semiannual':60,'yearly':120}
