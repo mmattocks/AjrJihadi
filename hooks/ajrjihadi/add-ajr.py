@@ -1,11 +1,13 @@
-import time
 import sys
 import json
-import ajrSalat
-import usrconfig
 
 task = json.loads(sys.argv[1])
 if task['description'] in usrconfig.prayer_list:
+    import time
+    import ajrSalat
+    import usrconfig
+
+
     [task['wait'], task['scheduled'], task['due'], task['until']], descmod = ajrSalat.getSalatTime(task['description'],
                                                     task['due'],
                                                     usrconfig.coords,
@@ -20,15 +22,20 @@ if task['description'] in usrconfig.prayer_list:
         task['description'] = descmod
 
 else:
-    # from tasklib import TaskWarrior
-    # db=TaskWarrior()
-    # p_task=db.tasks.get(uuid=task['parent'])
-    # due_shift = task['due'] - p_task['due']
+    from tasklib import TaskWarrior
+    from datetime import datetime
+    db=TaskWarrior()
+    db.overrides.update(dict(recurrence="no", hooks="no"))
+    
+    fmt = "%Y%m%dT%H%M%S%z"
+    p_task=db.tasks.get(uuid=task['parent'])
+    due_shift = datetime.strptime(task['due'],fmt) - p_task['due']
 
-    # time_attributes = ('wait', 'scheduled', 'until')
-    # for att in time_attributes:
-    #     if p_task[attr]:
-    #         task[attr] = p_task[attr] + due_shift
+    time_attributes = ('wait', 'scheduled', 'until')
+    for attr in time_attributes:
+        if p_task[attr]:
+            attrtime = p_task[attr] + due_shift
+            task[attr] = datetime.strftime(attrtime,fmt)
 
 print(json.dumps(task))
 sys.exit(0)
