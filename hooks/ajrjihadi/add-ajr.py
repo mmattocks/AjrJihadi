@@ -36,6 +36,13 @@ else:
         if p_task[attr]:
             attrtime = p_task[attr] + due_shift
             task[attr] = datetime.strftime(attrtime,fmt)
+        else
+            if usrconfig.recur_cull && attr=='until':
+                from datetime import timedelta
+                import time
+                from ajrSalat import tw_ISO8601_to_local_dt
+                task['until'] = datetime.strftime((tw_ISO8601_to_local_dt(task['due'],((time.mktime(time.localtime()) - time.mktime(time.gmtime())) / 60 / 60)) + timedelta(days=usrconfig.until_tds[task['recur']]), fmt)
+
 
 print(json.dumps(task))
 sys.exit(0)
