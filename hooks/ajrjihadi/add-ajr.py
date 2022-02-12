@@ -20,15 +20,15 @@ if task['description'] in usrconfig.prayer_list:
         task['description'] = descmod
 
 else:
-    from tasklib import TaskWarrior
-    db=TaskWarrior()
-    p_task=db.tasks.get(uuid=task['parent'])
-    due_shift = task['due'] - p_task['due']
+    # from tasklib import TaskWarrior
+    # db=TaskWarrior()
+    # p_task=db.tasks.get(uuid=task['parent'])
+    # due_shift = task['due'] - p_task['due']
 
-    time_attributes = ('wait', 'scheduled', 'until')
-    for att in time_attributes:
-        if p_task[attr]:
-            task[attr] = p_task[attr] + due_shift
+    # time_attributes = ('wait', 'scheduled', 'until')
+    # for att in time_attributes:
+    #     if p_task[attr]:
+    #         task[attr] = p_task[attr] + due_shift
 
 print(json.dumps(task))
 sys.exit(0)
