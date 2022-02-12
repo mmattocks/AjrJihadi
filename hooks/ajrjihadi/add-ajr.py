@@ -1,11 +1,11 @@
 import sys
 import json
+import usrconfig
 
 task = json.loads(sys.argv[1])
 if task['description'] in usrconfig.prayer_list:
     import time
     import ajrSalat
-    import usrconfig
 
 
     [task['wait'], task['scheduled'], task['due'], task['until']], descmod = ajrSalat.getSalatTime(task['description'],
